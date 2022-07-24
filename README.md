@@ -527,8 +527,8 @@ public List<OrderItem> getOrderItems() {
 - /authorize - used to authenticate
 - /token - used to retrieve the token
 - /introspect - allows to analyze and decode the token
--/revoke - allows to invalidate token
--/userinfo - from the open id extension, its user info
+- /revoke - allows to invalidate token
+- /userinfo - from the open id extension, its user info
 - /.well-known - shows the endpoints what are available
 
 ## SAML and LDAP
