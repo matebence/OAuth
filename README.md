@@ -11,13 +11,13 @@ OAuth is an open-standard authorization protocol or framework that provides appl
 ## What is OpenID?
 OpenID is an extension of OAuth. Where OAuth does the authentication part and OpenID holds user information like id or username. 
 
+    OAuth is about accessing APIs and OpenID is about identifying the users
+
 OAuth issues
 - Access tokens
 
 Openid connect issues
  - Id tokens
-
-		With other words OAuth is about accessing APIs and OpenID is about identifying the users
 
 ## Real world example 
 
@@ -72,10 +72,11 @@ Each applications has its own idenity called client id
 
 Client ID and secret can also be send as Basic Auth clientId:secret
 
-[OAuth2 playground](https://www.oauth.com/playground/) \n
+[OAuth2 playground](https://www.oauth.com/playground/)
+
 [Google playground](https://developers.google.com/oauthplayground/)
 
--**1. Authorization Code Flow**
+** Authorization Code Flow**
 
 Authorization Code Flow exchanges an authorization code for a token. For this exchange to take place, you have to also pass along your app’s client id and secret. The secret must be securely stored on the client side.
 
@@ -127,7 +128,7 @@ curl https://authorization-server.com/token
 	client_secret=CLIENT_SECRET
 ```
 
--**2. Client Credentials Flow**
+** Client Credentials Flow**
 
 The Client Credentials Flow allows applications to pass their Client Secret and Client ID to an authorization server, which authenticates the user, and returns a token. This happens without any user intervention.
 
@@ -151,7 +152,7 @@ https://api.authorization-server.com/token
     client_secret=CLIENT_SECRET
 ```
 
--**3. Resource Owner Password Flow**
+** Resource Owner Password Flow**
 
 The Resource Owner Password Flow asks users to submit their credentials via a form. Credentials are transferred to the backend and may be retained for future use, before an Access Token is granted. It’s essential that the app is completely trusted. Therefore, this flow is generally not recommended.
 
@@ -176,7 +177,7 @@ curl https://authorization-server.com/auth?
   --data password=pwd \
 ```
 
--**4. Implicit Flow**
+** Implicit Flow**
 
 This flow uses OIDC to implement a web sign-in that functions like WS-Federation and SAML. The web app requests and receives tokens via the front channel, without requiring extra backend calls or secrets. With this process, you don’t have to use, maintain, obtain or safeguard secrets in your app. 
 
@@ -199,7 +200,7 @@ The user was redirected back to the client, and you'll notice there is now a fra
 
     #access_token=ADcSqzxwt5hquOwRhSo_o4rVQKlEJct66Cs1yIBkl2Z87nQ-Rmy0_Gvis8yTkpUTVwK5r_xN&token_type=Bearer&expires_in=86400&scope=photos&state=XSlF9uFLyqF3HDdG	
 
--**6. Device Authorization Flow**
+** Device Authorization Flow**
 
 This flow makes it possible to authenticate users without asking for their credentials. This provides a better user experience for mobile devices, where it may be more difficult to type credentials. Applications on these devices can transfer their Client ID to the Device Authorization Flow to start the authorization process and obtain a token.
 
@@ -233,7 +234,7 @@ curlhttps://authorization-server.com/token
     --data user_code=BWD-789
 ```
 
--**7. Authorization Code Flow with PKCE**
+** Authorization Code Flow with PKCE**
 
 This flow uses a proof key for code exchange (PKCE). A secret known as a Code Verifier is provided by the calling application, which may be verified by the authorization server using a Proof Key. 
 
@@ -276,7 +277,7 @@ curl https://authorization-server.com/token
 	client_secret=CLIENT_SECRET
 ```
 
--**8. Hybrid flow**
+** Hybrid flow**
 
 Due to the inherent risks of performing an OAuth flow in a pure JavaScript environment, as well as the risks of storing tokens in a JavaScript app, it is also advisable to consider an alternative architecture where the OAuth flow is handled outside of the JavaScript code by a dynamic backend component. This is a relatively common architectural pattern where an application is served from a dynamic backend such as a .NET or Java app, but it uses a single-page app framework like React or Angular for its UI. If your app falls under this architectural pattern, then the best option is to move all of the OAuth flow to the server component, and keep the access tokens and refresh tokens out of the browser entirely. Note that in this case since your app has a dynamic backend, it is also considered a confidential client and can use a client secret to further protect the OAuth exchanges.
 
