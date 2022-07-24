@@ -17,38 +17,38 @@ OAuth issues
 Openid connect issues
  - Id tokens
 
-	With other words OAuth is about accessing APIs and OpenID is about identifying the users
+		With other words OAuth is about accessing APIs and OpenID is about identifying the users
 
 ## Real world example 
 
 What do OAuth 2.0 access tokens and hotel key cards have in common? It turns out quite a lot!
 
-A hotel key card is essentially a physical counterpart to an OAuth access token. **At a hotel, you check in at the front desk, show your ID card**, and then you get a key card that you can use to get into your hotel room. In OAuth, the application sends the user over to the OAuth server where they authenticate (analogous to showing the ID card at the front desk), and the OAuth server will then issue an access token to the application. 
+A hotel key card is essentially a physical counterpart to an OAuth access token.**At a hotel, you check in at the front desk, show your ID card**, and then you get a key card that you can use to get into your hotel room. In OAuth, the application sends the user over to the OAuth server where they authenticate (analogous to showing the ID card at the front desk), and the OAuth server will then issue an access token to the application. 
 
 **A hotel key can be used by anyone who can get a hold of it**. If you give your hotel key to a friend, they can use your hotel key to get into your room. An OAuth access token works the same way, anyone who has the access token can use it to make API requests. That’s the reason they’re called “Bearer Tokens,” since the bearer of the token can use it at the API. 
 
-**When the hotel gives you the key card, it’s your responsibility to keep it safe** and not lose it. When an access token is given to an application, the OAuth server expects the app to keep it safe. This is typically done by storing the access token in some sort of secure storage available to the application.
+**When the hotel gives you the key card, it’s your responsibility to keep it safe**and not lose it. When an access token is given to an application, the OAuth server expects the app to keep it safe. This is typically done by storing the access token in some sort of secure storage available to the application.
 
-**A hotel key has no meaning to the application using it.** When you get a key card from the front desk clerk at the hotel, you don’t need to worry about what data the magnetic stripe contains, or whether the key is RFID or NFC. All you care about is whether the door will open when you swipe the card.
+**A hotel key has no meaning to the application using it.**When you get a key card from the front desk clerk at the hotel, you don’t need to worry about what data the magnetic stripe contains, or whether the key is RFID or NFC. All you care about is whether the door will open when you swipe the card.
 
-In addition to opening your hotel room, your hotel key **may also open the front door of the hotel after hours, the hotel pool room, or the gym**. Which doors the key can open will depend on the type of access you’re granted within the hotel. If you’re a Platinum Medallion Elite Pro status at your hotel, your key may also get you access to the executive lounge.
+In addition to opening your hotel room, your hotel key**may also open the front door of the hotel after hours, the hotel pool room, or the gym**. Which doors the key can open will depend on the type of access you’re granted within the hotel. If you’re a Platinum Medallion Elite Pro status at your hotel, your key may also get you access to the executive lounge.
 
-**If you lose your key card**, or if you get kicked out of the hotel for partying too hard, **the hotel can revoke**your key card immediately, and it will no longer open your hotel room door.
+**If you lose your key card**, or if you get kicked out of the hotel for partying too hard,**the hotel can revoke**your key card immediately, and it will no longer open your hotel room door.
 
-When you get a hotel key, it’s not like a regular physical key that will always open a certain door. **Hotel keys will stop working** at the end of your stay **because the expiration of the access** is encoded into the card.
+When you get a hotel key, it’s not like a regular physical key that will always open a certain door.**Hotel keys will stop working**at the end of your stay**because the expiration of the access**is encoded into the card.
 
 ## Roles in OAuth
 
-User (**Resource owner**)
-Device (**User agent**)
-Application (**Client**)
-API (**Resource server**)
-Plus one role: **Authenrization server**
+- User (**Resource owner**)
+- Device (**User agent**)
+- Application (**Client**)
+- API (**Resource server**)
+- Plus one role:**Authenrization server**
 
 ## Application Types
 
-- Confidential - The server side application will be deployed with a client id and secret. These two informations are not visible to anyone.
-- Public - These are mobile and SPA apps where we dont have any client id or sercret
+- **Confidential** - The server side application will be deployed with a client id and secret. These two informations are not visible to anyone.
+- **Public** - These are mobile and SPA apps where we dont have any client id or sercret
 
 ## User Consent
 
@@ -72,10 +72,10 @@ Each applications has its own idenity called client id
 
 Client ID and secret can also be send as Basic Auth clientId:secret
 
-[OAuth2 playground](https://www.oauth.com/playground/)
+[OAuth2 playground](https://www.oauth.com/playground/) \n
 [Google playground](https://developers.google.com/oauthplayground/)
 
-- ** 1. Authorization Code Flow **
+-**1. Authorization Code Flow**
 
 Authorization Code Flow exchanges an authorization code for a token. For this exchange to take place, you have to also pass along your app’s client id and secret. The secret must be securely stored on the client side.
 
@@ -91,7 +91,9 @@ How this OAuth flow works:
 - The authorization server generates an ID Token, Access Token, and an optional Refresh Token, before providing them them to the app.
 - The web application can then use the Access Token to gain access to the target API with the user’s credentials.
 
-** cURL example **
+![Authorization Code Flow](https://raw.githubusercontent.com/matebence/OAuth/master/authorization_code.png)
+
+**cURL example**
 
 ```bash
 curl https://authorization-server.com/auth?
@@ -125,7 +127,7 @@ curl https://authorization-server.com/token
 	client_secret=CLIENT_SECRET
 ```
 
-- ** 2. Client Credentials Flow **
+-**2. Client Credentials Flow**
 
 The Client Credentials Flow allows applications to pass their Client Secret and Client ID to an authorization server, which authenticates the user, and returns a token. This happens without any user intervention.
 
@@ -137,7 +139,9 @@ How this OAuth flow works:
 - The authorization server checks the Client Secret and Client ID and returns an Access Token to the application.
 - The Access Token allows the application to access the target API with the required user account.
 
-** cURL example **
+![Client Credentials Flow](https://raw.githubusercontent.com/matebence/OAuth/master/client_credentials.png)
+
+**cURL example**
 
 ```bash
 https://api.authorization-server.com/token
@@ -147,7 +151,7 @@ https://api.authorization-server.com/token
     client_secret=CLIENT_SECRET
 ```
 
-- ** 3. Resource Owner Password Flow **
+-**3. Resource Owner Password Flow**
 
 The Resource Owner Password Flow asks users to submit their credentials via a form. Credentials are transferred to the backend and may be retained for future use, before an Access Token is granted. It’s essential that the app is completely trusted. Therefore, this flow is generally not recommended.
 
@@ -158,6 +162,8 @@ How this OAuth flow works:
 - The application stores the credentials, and passes them to the OAuth authorization server.
 - The authorization server validates credentials and returns the Access Token (and an optional Refresh Token).
 - The app can now access the target API with the user’s credentials.
+
+![Resource Owner Password Flow](https://raw.githubusercontent.com/matebence/OAuth/master/resource_owner_password.png)
 
 ```bash
 curl https://authorization-server.com/auth?
@@ -170,13 +176,15 @@ curl https://authorization-server.com/auth?
   --data password=pwd \
 ```
 
-- ** 4. Implicit Flow **
+-**4. Implicit Flow**
 
 This flow uses OIDC to implement a web sign-in that functions like WS-Federation and SAML. The web app requests and receives tokens via the front channel, without requiring extra backend calls or secrets. With this process, you don’t have to use, maintain, obtain or safeguard secrets in your app. 
 
 Use Cases: Apps that don’t want to maintain secrets locally.
 
-** cURL example **
+![Implicit Flow](https://raw.githubusercontent.com/matebence/OAuth/master/implicit.png)
+
+**cURL example**
 
 ```bash
 curl https://authorization-server.com/auth?
@@ -191,13 +199,13 @@ The user was redirected back to the client, and you'll notice there is now a fra
 
     #access_token=ADcSqzxwt5hquOwRhSo_o4rVQKlEJct66Cs1yIBkl2Z87nQ-Rmy0_Gvis8yTkpUTVwK5r_xN&token_type=Bearer&expires_in=86400&scope=photos&state=XSlF9uFLyqF3HDdG	
 
-- ** 6. Device Authorization Flow **
+-**6. Device Authorization Flow**
 
 This flow makes it possible to authenticate users without asking for their credentials. This provides a better user experience for mobile devices, where it may be more difficult to type credentials. Applications on these devices can transfer their Client ID to the Device Authorization Flow to start the authorization process and obtain a token.
 
 Use Cases: Apps running on input-constrained devices that are online, enabling seamless authentication via credentials stored on the device.
 
-** cURL example **
+**cURL example**
 
 ```bash
 curl https://authorization-server.com/device
@@ -225,13 +233,13 @@ curlhttps://authorization-server.com/token
     --data user_code=BWD-789
 ```
 
-- ** 7. Authorization Code Flow with PKCE ** 
+-**7. Authorization Code Flow with PKCE**
 
 This flow uses a proof key for code exchange (PKCE). A secret known as a Code Verifier is provided by the calling application, which may be verified by the authorization server using a Proof Key. 
 
 Use Cases: Apps that need to serve unknown public clients who may introduce additional security issues that are not addressed by the Auth Code Flow. 
 
-** cURL example **
+**cURL example**
 
 ```bash
 curl https://authorization-server.com/auth?
@@ -268,15 +276,17 @@ curl https://authorization-server.com/token
 	client_secret=CLIENT_SECRET
 ```
 
-- ** 8. Hybrid** 
+-**8. Hybrid flow**
 
 Due to the inherent risks of performing an OAuth flow in a pure JavaScript environment, as well as the risks of storing tokens in a JavaScript app, it is also advisable to consider an alternative architecture where the OAuth flow is handled outside of the JavaScript code by a dynamic backend component. This is a relatively common architectural pattern where an application is served from a dynamic backend such as a .NET or Java app, but it uses a single-page app framework like React or Angular for its UI. If your app falls under this architectural pattern, then the best option is to move all of the OAuth flow to the server component, and keep the access tokens and refresh tokens out of the browser entirely. Note that in this case since your app has a dynamic backend, it is also considered a confidential client and can use a client secret to further protect the OAuth exchanges.
+
+![Hybrid Flow](https://raw.githubusercontent.com/matebence/OAuth/master/hybrid.png)
 
 ## Retrieving ID tokens
 
 The main goal of id tokens are transferring information to the APIs
 
-** cURL example **
+**cURL example**
 
 ```bash
 curl https://authorization-server.com/auth?
@@ -358,14 +368,32 @@ Validate signuture:
 ```
 
 Which should we use??
-API gateway should do local validations for all
-Token interpestion via network only for sensetive APIs like payment etc ....
+
+- API gateway should do local validations for all
+	- Client gets an access token with scopes for multiple APIs
+	- Each API validates the JWT
+	- Each API verifies its own scopes
+	- Each API trusts the claims in the JWT and uses them for authorization
+- Token interpestion via network only for sensetive APIs like payment etc ....
+- Token propagtion
+	- If you were calling an external API belonging to someone else you would definitely use client credentials to get a token that entitles you to call that API.
+	- If the data owner is the same then you should simply forward the access token.
 
 Token lifetimes (can be improved via refresh tokens):
 
-- Short life times less leaked access tokens
-- Sensitive API short life time
-- NonSensitive API long life time
+- Id tokens
+	- Do not keep the data if its not needed
+	- Delete when we supposed to
+
+- Access token
+	- Read only, low risk data: Long exppiration
+	- Read only, sensitive data: Shorter expiration
+	- Read write, sensitive data: Very short
+
+- Refresh tokens
+	- Retrieve a new access tokens
+	- With this token we are able to get a new access token always and infinitly
+	- Only way we can stop this is by revoke the token
 
 Possible reasons for token invalidations:
 
@@ -393,8 +421,160 @@ Styles:
     - https://api.company.com/resources
     - https://api.company.com
 
-User Mapping with scopes:
+**User Mapping with scopes**
+
+- Down scoping
+	- based on some group from LDAP
+- Non down scoping
+	- we get all the scopes and then use token exchange
+
+Scopes are strings provided to APIs, so that they know whether to grant access to the type of data and operation requested. A common way to get started with scopes is to use a combination of the type of resource and the access required on it
+
+|Resource Type     		|Access Level			|Scope Value  |
+|-----------------------|-----------------------|-------------|
+|order 					|read 					|order_read   |
+		
+When data is hierarchical it usually makes sense to also use hierarchical scopes, as in the below examples, where colon characters are used to navigate to subresources
+
+|Scope     				|Grants access to 																		|
+|-----------------------|---------------------------------------------------------------------------------------|
+|order 					|Full information about orders, which perhaps not many clients should have access to	|
+|order:item 			|Information about items within an order												|
+|order:price 			|Prices offered to customers based on their benefits	 								|
+|order:shipping:status 	|Details on whether the order has been successfully delivered							|
+|order:shipping:address |Information on where the order will be shipped 								 		|
+
+Enforcing Scopes in API Gateways. When a particular API operation is called, high level scopes can be enforced at the entry point in a Reverse Proxy or API Gateway. Typically the gateway returns '401 unauthorized' if a token is expired, or '403 forbidden' if a required scope is missing.
+
+Authorization Requires More Than Scopes. Scopes are only part of the authorization solution, and a complete implementation will also need to enforce rules such as these
+
+The finer details of authorization should be handled by Claims, another part of the security architecture
+
+|User Role     		|Authorization Rule 																									 |
+|-------------------|------------------------------------------------------------------------------------------------------------------------|
+|Customer 			|A customer can only view benefits and orders associated to their own customer id 										 |
+|Customer 			|Customers with higher subscription levels can access additional inventory 												 |
+|Administrator 		|An administrator may have access to all data, though this often involves business rules such as regional restrictions 	 |
+|Supplier User 		|A supplier business partner can only view inventory for their own company's supplier id 								 |
+
+If not designed carefully, you can end up with a large number of scopes that are difficult to maintain over time. The most common cause of 'scope explosion' is when client specific concerns are used in scope names, such as roles or usage scenarios.
+
+- inventory-for-supplier
+- order-admin-usa.write
+
+**Token Sharing Approaches**
+
+- Reusing the same token - simple token propagation
+- Embedding a token - get another token from the token which is embedded as a claim.
+- Exchanging a token - get a new token with least privileges. (token-exchange flow)
+
+**Claims**
+
+In APIs, the Claims Principal is an object populated from the access token claims after the JWT has been verified. Some API technology stacks will construct this object automatically.
+
+```java
+public class InventoryApiClaimsPrincipal {
+
+   // OAuth scope values from the access token
+   String[] scopes;
+
+   // The OAuth immutable subject claim
+   String subject;
+
+   // The User Id in the API's own data
+   int userId;
+
+   // The User Role in the API's own data
+   String userRole;
+
+   // The subscription level for a customer
+   String subscriptionLevel;
+
+   // The User's Company Id, where applicable
+   int companyId;
+}
+```
+
+In addition to the simple primitive values shown above, claims can also be arrays and objects. It is common throughout many industries to restrict data access for one or more of a user's locations — array claims can enable this.
+
+**Using Claims to Filter Collections**
+
+```java
+public List<OrderItem> getOrderItems() {
+
+    if (!this.claimsPrincipal.hasScope("order:item"))
+        throw forbiddenError();
+    }
+
+    if (this.claimsPrincipal.hasRole(ADMIN_ROLE)) {
+
+      return this.repository.getAllOrderItems(criteria);
+
+    } else if (this.claimsPrincipal.hasRole(CUSTOMER_ROLE)) {
+
+       return this.repository.getFilteredOrderItems(this.claimsPrincipal.userId);
+
+    } else {
+
+      throw forbiddenError();
+    }
+}
+```
 
 ## Endpoints
 
+- /authorize - used to authenticate
+- /token - used to retrieve the token
+- /introspect - allows to analyze and decode the token
+-/revoke - allows to invalidate token
+-/userinfo - from the open id extension, its user info
+- /.well-known - shows the endpoints what are available
+
+## SAML and LDAP
+
+The earliest security architectures:
+
+- Identity
+	- Stored in the application database
+- Authentication
+	- Done by the application
+- Authorization
+	- Done by the application
+
+The next security architecture was LDAP
+
+- Identity
+	- Stored in LDAP database
+	- Microsoft Active Directory
+- Authentication
+	- Done Bu LDAP
+- Authorization
+	- Done by application
+
+SAML is an XML-based standard that interfaces identity providers with service providers. SAML tokens are essentially XML-based assertions that pass information about a resource owner (end-user) between an Identity Provider and a Service Provider.
+
+SAML 2.0, henceforth called SAML, implements a secure system that helps authenticate and authorize XML-based tokens (also called security assertions) between the providers. There are two providers: an Identity Provider (IdP) and a Service Provider (SP). An IdP is an organization such as Microsoft Active Directory that undertakes the authentication process and sends the data to the SP alongside users’ access rights for the service.
+
+On the other hand, an SP is an organization that requests the IdP to grant authorization to users. Consider a user who logs into any SAML-activated system such as SalesForce. SalesForce, which in this case is an SP, requests authorization from the appropriate IdP such as Microsoft Active Directory.
+
+The SAML workflow comprises of the following steps:
+
+- An end user clicks the Login button on the file-sharing service at an example website. The example website is the SP and the end user is the client.
+- The SP constructs a SAML authentication request, signs the request, encrypts it and sends it to IdP directly.
+- The SP redirects the client’s browser to IdP for authentication purposes.
+- IdP verifies SAML authentication request. If the request is valid, it presents a login form so the end user can enter his username and password.
+- After the client successfully logs in, IdP generates a SAML Assertion or Token which serves as the user’s identity, and sends it to SP.
+- IdP redirects Client back to SP.
+- SP verifies SAML Assertion, extracts user identity, assigns correct permissions to Client, and logs user to the service.
+
+While there are similarities between SAML and OAuth, the two protocols play different roles in access management, with SAML being used in authentication and OAuth in authorization.
+
 ## Summary
+
+|Flow	     	 					  |Description           																																				  |Client type 	 	 				 |Recommended 		 |
+|-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|-------------------|
+|Authorization code   	              |<ul><li>Server side web applications</li><li>Needs User Agent</li><li>Can use refresh tokens</li><li>Very safe</li></ul>  			   		 						  |Confidential Client 	  			 |🟢 				 |
+|Implicit   	     				  |<ul><li>Singe Page applications</li><li>Needs user agent</li><li>Cannot use refresh tokens</li><li>Exposes access tokens</li><li>Not recommended (deprecated)</li></ul>|Public client 					 |🔴 				 |
+|Authorization code (PKCE extension)  |<ul><li>Recommended for public clients</li><li>Needs User Agent</li><li>Can use refresh tokens</li></ul>  			   		 										  |Public client Confidential Client |🟢 				 |
+|Client Crdential   	     		  |<ul><li>Use for Cron Jbos on the server</li><li>Not User Agent</li><li>Cannot use Refresh tokens</li></ul>  			   		 										  |Confidential Client 				 |🟢 				 |
+|Resource Owner Password Crendentials |<ul><li>Resource Server and Client must be from same Orgnization</li><li>Can use Refresh tokens</li><li>Should be avoided (deprecated)</li></ul>   	     			  |Public client Confidential Client |🔴					 |
